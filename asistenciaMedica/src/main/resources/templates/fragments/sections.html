@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <!-- Barra de menús superior -->
+  <li th:fragment="menu_item(uri, text)" th:with="isActive=${uri == #httpServletRequest.requestURI}">
+    <a class="nav-link"
+       th:classappend="${isActive ? 'active' : null}"
+       th:attrappend="aria-current=${isActive ? 'page' : null}"
+       th:href="${uri}"
+       th:text="${text}"></a>
+  </li>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary" th:fragment="main_menu">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/}">Asistencia Médica</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li th:replace=":: menu_item(@{/pacientes}, 'Todos los Pacientes')"></li>
+          <li th:replace=":: menu_item(@{/pacientes/new}, 'Nuevo Paciente')"></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</html>

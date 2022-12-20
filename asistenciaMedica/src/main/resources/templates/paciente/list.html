@@ -1,0 +1,58 @@
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layouts/default}"
+    th:with="title=${'Lista de Pacientes'}">
+<body>
+  <!-- Lista de Pacientes -->
+  <div layout:fragment="content">
+    <table id="patientsList" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Registros</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- Iteramos sobre la lista de pacientes -->
+      <tr th:each="paciente : ${pacientes}">
+        <td th:text="${paciente.codigo}"></td>
+        <td th:text="${paciente.nombre}"></td>
+        <td th:text="${paciente.fechaDeNacimiento}"></td>
+        <td th:text="${paciente.signosVitalesRegistros.size()}"></td>
+        <td>
+          <div class="btn-group">
+            <a th:href="@{/pacientes/{codigo}/editar(codigo=${paciente.codigo})}"
+               class="btn text-warning" title="Editar">
+              <i class="fas fa-edit fa-fw"></i>
+            </a>
+            <a th:href="@{/pacientes/{codigo}/eliminar(codigo=${paciente.codigo})}"
+               class="btn text-danger" title="Remover">
+              <i class="fas fa-times fa-fw"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+<script layout:fragment="scripts">
+  $(document).ready(function () {
+    $('#patientsList').DataTable({
+      'columns': [
+        null,
+        null,
+        {'searchable': false},
+        {'searchable': false, 'orderable': false},
+        {'searchable': false, 'orderable': false},
+      ]
+    });
+  });
+</script>
+
+</html>

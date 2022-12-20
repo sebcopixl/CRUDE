@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"
+           th:text="${'Asistencia Médica - ' + (title ?: 'NO TITLE')}">
+    </title>
+    <div th:replace="fragments/includes :: css"></div>
+  </head>
+  <body>
+    <nav th:replace="fragments/sections :: main_menu"></nav>
+    <div class="container">
+      <h1 class="h1" th:text="${title}"></h1>
+      <div layout:fragment="content"></div>
+    </div>
+   </body>
+  <footer th:replace="fragments/includes :: js"></footer>
+  <script layout:fragment="scripts"></script>
+</html>

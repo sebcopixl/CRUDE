@@ -1,0 +1,7 @@
+
+<div th:fragment="nuevo-signo-vital" >
+  <h2 class="h2">Nuevo Registro</h2>
+  <!-- Template para la creación de los signos vitales de un paciente  -->
+  <form th:replace="fragments/forms :: signosVitalesRegistro(signosVitalesRegistro=${signosVitalesRegistro}, action=@{/pacientes/{codigo}/signosVitalesRegistros/new(codigo=${paciente.codigo})}, create=true)">
+  </form>
+</div>

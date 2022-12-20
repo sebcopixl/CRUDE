@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <!-- Formulario para el Paciente -->
+  <form th:fragment="paciente(paciente, action, create)"
+        class="g-3" th:method="post" th:action="${action}" th:object="${paciente}">
+    <!-- Codigo -->
+    <div class="input-group mb-3" th:if="${create == false}">
+      <span id="pacienteCodigo" class="input-group-text">Código</span>
+      <input type="text" readonly class="form-control"
+             aria-label="Codigo" aria-describedby="pacienteCodigo"
+             th:classappend="${#fields.hasErrors('codigo') ? 'is-invalid' : ''}"
+             th:field="*{codigo}"
+      >
+    </div>
+    <!-- Nombre -->
+    <div class="input-group mb-3">
+      <span id="pacienteNombre" class="input-group-text">Nombre</span>
+      <input type="text" class="form-control"
+             aria-label="Nombre" aria-describedby="pacienteNombre"
+             th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}"
+             th:field="*{nombre}"
+      >
+      <div class="invalid-feedback" th:errors="*{nombre}">Error</div>
+    </div>
+    <!-- Fecha de Nacimiento -->
+    <div class="input-group mb-3">
+      <span id="pacienteFechaDeNacimiento" class="input-group-text">Fecha de Nacimiento</span>
+      <input type="text" class="form-control"
+             aria-label="Fecha de Nacimiento" aria-describedby="pacienteFechaDeNacimiento"
+             th:classappend="${#fields.hasErrors('fechaDeNacimiento') ? 'is-invalid' : ''}"
+             th:field="*{fechaDeNacimiento}"
+      >
+      <div class="invalid-feedback" th:errors="*{fechaDeNacimiento}">Error</div>
+    </div>
+    <!-- Acciones -->
+    <div>
+      <button type="submit" class="btn btn-primary"
+              th:text="${create ? 'Agregar' : 'Guardar'} + ' Paciente'">Agregar
+      </button>
+    </div>
+  </form>
+
+  <!-- Formulario para los Signos Vitales -->
+  <form th:fragment="signosVitalesRegistro(signosVitalesRegistro, action, create)"
+        class="g-3" th:method="post" th:action="${action}" th:object="${signosVitalesRegistro}">
+    <input th:if="${create == false}" type="hidden" readonly th:field="*{id}">
+    <input type="hidden" readonly th:field="*{paciente}">
+    <!-- Fecha de Registro -->
+    <div class="input-group mb-3">
+      <span id="fechaDescriptor" class="input-group-text">Date</span>
+      <input type="text" class="form-control"
+             aria-label="Date" aria-describedby="fechaDescriptor"
+             th:classappend="${#fields.hasErrors('fechaRegistro') ? 'is-invalid' : ''}"
+             th:field="*{fechaRegistro}"
+      >
+      <div class="invalid-feedback" th:errors="*{fechaRegistro}">Error</div>
+    </div>
+    <!-- Presión -->
+    <div class="input-group mb-3">
+      <span id="presionDescriptor" class="input-group-text">Presión Cardiáca</span>
+      <input type="text" class="form-control"
+             aria-label="Blood pressure" aria-describedby="presionDescriptor"
+             th:classappend="${#fields.hasErrors('presion') ? 'is-invalid' : ''}"
+             th:field="*{presion}"
+      >
+      <div class="invalid-feedback" th:errors="*{presion}">Error</div>
+    </div>
+    <!-- Frecuencia    -->
+    <div class="input-group mb-3">
+      <span id="frecuenciaDescriptor" class="input-group-text">Frecuencia Cardiáca</span>
+      <input type="text" class="form-control"
+             aria-label="Heart rate" aria-describedby="frecuenciaDescriptor"
+             th:classappend="${#fields.hasErrors('frecuencia') ? 'is-invalid' : ''}"
+             th:field="*{frecuencia}"
+      >
+      <div class="invalid-feedback" th:errors="*{frecuencia}">Error</div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary"
+              th:text="${create ? 'Agregar' : 'Guardar'} + ' Registro'">Add
+      </button>
+    </div>
+  </form>
+
+</html>
