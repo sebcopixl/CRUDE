@@ -17,7 +17,6 @@
         </tr>
       </thead>
       <tbody>
-      <!-- Iteramos sobre la lista de pacientes -->
       <tr th:each="paciente : ${pacientes}">
         <td th:text="${paciente.codigo}"></td>
         <td th:text="${paciente.nombre}"></td>

@@ -18,13 +18,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
- * Controller de la entidad {@link Paciente}
- * <p>
- * Todas las peticiones HTTP relacionadas al Paciente se capturan en este controlador.
- */
 @Controller
 public class PacienteController implements WebMvcConfigurer {
+
     private final Logger logger = LoggerFactory.getLogger(PacienteController.class);
 
     private final IPacienteService pacienteService;
@@ -41,9 +37,7 @@ public class PacienteController implements WebMvcConfigurer {
     }
 
     @GetMapping("/pacientes")
-    public String listaPacientes(
-            Model model
-    ) {
+    public String listaPacientes(Model model) {
         logger.info("Despliega la lista de pacientes");
         List<Paciente> pacientes = pacienteService.listarPaciente();
         model.addAttribute("pacientes", pacientes);
@@ -51,20 +45,14 @@ public class PacienteController implements WebMvcConfigurer {
     }
 
     @GetMapping("/pacientes/new")
-    public String nuevoPaciente(
-            Model model
-    ) {
+    public String nuevoPaciente(Model model) {
         logger.info("Despliega el formulario para crear un paciente nuevo");
         model.addAttribute("paciente", new Paciente());
         return "paciente/new";
     }
 
     @PostMapping("/pacientes/new")
-    public String agregarPaciente(
-            @Valid Paciente paciente,
-            BindingResult bindingResult,
-            Model model
-    ) {
+    public String agregarPaciente(@Valid Paciente paciente, BindingResult bindingResult, Model model) {
         logger.info("Guarda un paciente nuevo");
         if (bindingResult.hasErrors()) {
             logger.info("Existen campos inválidos.");
@@ -77,10 +65,7 @@ public class PacienteController implements WebMvcConfigurer {
     }
 
     @GetMapping("/pacientes/{codigo}/editar")
-    public String editarPaciente(
-            @PathVariable(value = "codigo") Long codigo,
-            Model model
-    ) {
+    public String editarPaciente(@PathVariable(value = "codigo") Long codigo, Model model) {
         logger.info("Despliega el formulario para editar un paciente con [codigo={}]", codigo);
         Paciente paciente = pacienteService.getPacienteByCodigo(codigo);
         model.addAttribute("paciente", paciente);
@@ -89,11 +74,7 @@ public class PacienteController implements WebMvcConfigurer {
     }
 
     @PostMapping("/pacientes/guardar")
-    public String guardarPaciente(
-            @Valid Paciente paciente,
-            BindingResult bindingResult,
-            Model model
-    ) {
+    public String guardarPaciente(@Valid Paciente paciente, BindingResult bindingResult, Model model) {
         logger.info("Actualizando datos de paciente con codigo={}", paciente.getCodigo());
 
         if (bindingResult.hasErrors()) {
@@ -109,12 +90,9 @@ public class PacienteController implements WebMvcConfigurer {
     }
 
     @GetMapping("/pacientes/{codigo}/eliminar")
-    public String eliminarPaciente(
-            @PathVariable(value = "codigo") Long codigo
-    ) {
+    public String eliminarPaciente(@PathVariable(value = "codigo") Long codigo) {
         logger.info("Eliminar paciente con codigo: {}", codigo);
         pacienteService.eliminar(codigo);
         return "redirect:/pacientes";
     }
-
 }

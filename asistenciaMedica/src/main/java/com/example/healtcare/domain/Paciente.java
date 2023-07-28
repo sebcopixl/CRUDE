@@ -13,15 +13,6 @@ import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Entidad que modela un paciente del mundo real, se registra:
- * <ul>
- *     <li>Código</li>
- *     <li>Nombre</li>
- *     <li>Fecha de Nacimiento</li>
- *     <li>Registro de Signos Vitales</li>
- * </ul>
- */
 @Entity
 public class Paciente {
     @Id
@@ -36,6 +27,9 @@ public class Paciente {
     @PastOrPresent
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fechaDeNacimiento;
+
+    @NotNull
+    private String sexo; // New field for capturing gender (MASCULINO or FEMENINO)
 
     @OneToMany(
             mappedBy = "paciente",
@@ -67,6 +61,14 @@ public class Paciente {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public List<SignosVitales> getSignosVitalesRegistros() {
         return signosVitalesRegistros;
     }
@@ -77,10 +79,11 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "patientCode=" + codigo +
-                ", name='" + nombre + '\'' +
-                ", dateOfBirth=" + fechaDeNacimiento +
+        return "Paciente{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", fechaDeNacimiento=" + fechaDeNacimiento +
+                ", sexo='" + sexo + '\'' +
                 '}';
     }
 }

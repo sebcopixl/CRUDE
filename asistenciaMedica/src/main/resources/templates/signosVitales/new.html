@@ -1,4 +1,8 @@
-
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/default}"
+        th:with="title=${'Nuevo Paciente'}">
 <div th:fragment="nuevo-signo-vital" >
   <h2 class="h2">Nuevo Registro</h2>
   <!-- Template para la creación de los signos vitales de un paciente  -->

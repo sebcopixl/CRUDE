@@ -11,19 +11,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
-/**
- * Entidad que modela los signos vitales de un paciente del mundo real, se registra:
- * <ul>
- *     <li>Código</li>
- *     <li>Nombre</li>
- *     <li>Fecha de Registro</li>
- *     <li>Presión Cardiáca</li>
- *     <li>Frecuencia Cardiáca</li>
- *     <li>Paciente</li>
- * </ul>
- * En este caso se incluye un paciente como atributo de la clase {@link SignosVitales} siendo que un {@link Paciente} puede "poseer"
- * varios signos vitales, pero un {@link SignosVitales} solo puede pertencer a un {@link Paciente}.
- */
+
 @Entity
 public class SignosVitales {
     @Id

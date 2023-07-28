@@ -24,6 +24,8 @@ public interface ISignosVitalesService {
      */
     void eliminar(Long id);
 
+    void actualizar(Long id, SignosVitales nuevosSignosVitales);
+
     /**
      * Edita los signos vitales de un paciente
      *

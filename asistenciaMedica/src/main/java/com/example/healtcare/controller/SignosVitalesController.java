@@ -17,11 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.validation.Valid;
 import java.text.MessageFormat;
 
-/**
- * Controller de la entidad {@link SignosVitales}
- * <p>
- * Todas las peticiones HTTP relacionadas al Paciente se capturan en este controlador.
- */
 @Controller
 public class SignosVitalesController implements WebMvcConfigurer {
     private final Logger logger = LoggerFactory.getLogger(SignosVitalesController.class);
@@ -52,15 +47,10 @@ public class SignosVitalesController implements WebMvcConfigurer {
         model.addAttribute("signosVitales", signosVitales);
         model.addAttribute("paciente", signosVitales.getPaciente());
         return MessageFormat.format("redirect:/pacientes/{0}/editar", codigo);
-
     }
 
-    /* editar signosvitales en base al paciente controller. falta un post
-    * en paciente controller hay un metodo get para add paciente, para edit y metodo post para guardar
-    * en signos vitales controller hay un solo metodo post para add y save un nuevo signo vital
-    * separar add signos vitales en un get y un post */
     @GetMapping("/pacientes/{codigo}/signosVitalesRegistros/{id}/editar")
-    public String editarSignosVitales(
+    public String editarSignosVitalesForm(
             @PathVariable(value = "codigo") Long codigo,
             @PathVariable(value = "id") Long id,
             Model model
@@ -69,7 +59,7 @@ public class SignosVitalesController implements WebMvcConfigurer {
         SignosVitales signosVitales = service.getSignoVitalById(id);
         model.addAttribute("signosVitales", signosVitales);
         model.addAttribute("paciente", signosVitales.getPaciente());
-        return MessageFormat.format("redirect:/pacientes/{0}/editar/{1}", codigo, id);
+        return "signosvitales/edit";
     }
 
     @PostMapping("/pacientes/{codigo}/signosVitalesRegistros/{id}/editar")
@@ -80,19 +70,17 @@ public class SignosVitalesController implements WebMvcConfigurer {
             BindingResult bindingResult,
             Model model
     ) {
-        logger.info("Despliega el formulario para editar el signo vital con [id={}] del paciente con [codigo={}]", id, codigo);
+        logger.info("Actualizando los signos vitales con [id={}] del paciente con [codigo={}]", id, codigo);
         if (bindingResult.hasErrors()) {
-            logger.info("Existen campos inválidos.");
+            logger.info("Error al actualizar los signos vitales.");
             model.addAttribute("signosVitales", signosVitales);
             model.addAttribute("paciente", signosVitales.getPaciente());
-            return "paciente/edit";
+            return "signosvitales/edit";
         }
 
-        service.guardar(signosVitales);
-        model.addAttribute("signosVitales", signosVitales);
-        model.addAttribute("paciente", signosVitales.getPaciente());
-        return MessageFormat.format("redirect:/pacientes/{0}/editar", codigo);
+        service.actualizar(id, signosVitales);
 
+        return MessageFormat.format("redirect:/pacientes/{0}/editar", codigo);
     }
 
     @GetMapping("/pacientes/{codigo}/signosVitalesRegistros/{id}/eliminar")

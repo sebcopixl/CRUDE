@@ -1,6 +1,5 @@
 package com.example.healtcare.service;
 
-import com.example.healtcare.domain.Paciente;
 import com.example.healtcare.domain.SignosVitales;
 import com.example.healtcare.repository.ISignosVitalesRepository;
 import org.slf4j.Logger;
@@ -8,11 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Implementación de la interfaz {@link ISignosVitalesService}
- * <p>
- * Todas las operaciones relacionadas a la lógica de negocio de un {@link Paciente} deben ser procesadas por esta clase
- */
 @Service
 public class SignosVitalesService implements ISignosVitalesService {
     private final Logger logger = LoggerFactory.getLogger(SignosVitalesService.class);
@@ -35,8 +29,19 @@ public class SignosVitalesService implements ISignosVitalesService {
         logger.debug("Eliminar signos vitales [id: {}]", id);
         repository.deleteById(id);
     }
-    /*
-    * Obtiene el signo vital a traves del ID*/
+
+    @Override
+    public void actualizar(Long id, SignosVitales nuevosSignosVitales) {
+        logger.debug("Actualizar signos vitales [id: {}]", id);
+        SignosVitales signosVitales = repository.getReferenceById(id);
+
+        // Perform the necessary updates to the SignosVitales object
+        signosVitales.setFechaRegistro(nuevosSignosVitales.getFechaRegistro());
+        signosVitales.setPresion(nuevosSignosVitales.getPresion());
+        signosVitales.setFrecuencia(nuevosSignosVitales.getFrecuencia());
+
+        repository.save(signosVitales);
+    }
 
     @Override
     public SignosVitales getSignoVitalById(Long id) {

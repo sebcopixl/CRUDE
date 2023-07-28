@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Implementación de la interfaz {@link IPacienteService}
- * <p>
- * Todas las operaciones relacionadas a la lógica de negocio de un {@link Paciente} deben ser procesadas por esta clase
- */
+
 @Service
 public class PacienteService implements IPacienteService {
     private final Logger logger = LoggerFactory.getLogger(PacienteService.class);

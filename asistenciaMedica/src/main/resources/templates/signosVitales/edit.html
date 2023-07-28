@@ -1,7 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      th:with="title=${'Editar Registro'}">
 
-<div th:fragment="eit-signo-vital" >
-  <h2 class="h2">Editar Registro</h2>
-  <!-- Template para la creación de los signos vitales de un paciente  -->
-  <form th:replace="fragments/forms :: signosVitalesRegistro(signosVitalesRegistro=${signosVitalesRegistro}, action=@{/pacientes/{codigo}/signosVitalesRegistros/{id}/guardar(codigo=${paciente.codigo},id=${paciente.id})}, create=false)">
+
+<body layout:fragment="content">
+<div th:fragment="edit-signo-vital">
+  <form th:object="${signosVitales}" th:action="@{/pacientes/{codigo}/signosVitalesRegistros/{id}/editar(codigo=${signosVitales.paciente.codigo}, id=${signosVitales.id})}" method="post">
+    <div class="form-group">
+      <label for="fechaRegistro">Fecha de Registro:</label>
+      <input type="date" id="fechaRegistro" th:field="*{fechaRegistro}" class="form-control" required="required" />
+    </div>
+    <div class="form-group">
+      <label for="presion">Presión Cardiaca:</label>
+      <input type="number" id="presion" th:field="*{presion}" class="form-control" required="required" />
+    </div>
+    <div class="form-group">
+      <label for="frecuencia">Frecuencia Cardiaca:</label>
+      <input type="number" id="frecuencia" th:field="*{frecuencia}" class="form-control" required="required" />
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      <a th:href="@{/pacientes/{codigo}/editar(codigo=${signosVitales.paciente.codigo})}" class="btn btn-secondary">Cancelar</a>
+    </div>
   </form>
 </div>
+</body>
+</html>
